@@ -7,72 +7,56 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <header class="d-flex align-items-center fluid">
         <div class="header-content d-flex justify-content-center">
             <div class="header-title">Level: {{level}}</div>
         </div>
     </header>
-    <div class="container mt-5 d-flex align-items-center justify-content-center">
+    <div class="container mt-5 d-flex flex-column align-items-center">
         <div class="table">
             <div class="row">
-                <div class="col" onclick="test()">
-                    <img id="test" style="padding: 0; margin: 0; position: absolute;" src="{{img}}" height="120px" />
-                </div>
-                <div class="col">
-                    <img id="test" style="padding: 0; margin: 0; position: absolute;" src="{{img}}" height="120px" />
-                </div>
-                <div class="col">
-                    <img id="test" style="padding: 0; margin: 0; position: absolute;" src="{{img}}" height="120px" />
-                </div>
-                <div class="col">
-                    <img id="test" style="padding: 0; margin: 0; position: absolute;" src="{{img}}" height="120px" />
-                </div>
+                {{#row1}}
+                    <div class="col" onclick="test()">
+                        <img id="test" style="padding: 0; margin: 0; position: absolute;" src="http://localhost:8080/image/{{type}}.png" height="120px" />
+                    </div>
+                {{/row1}}
             </div>
             <div class="row">
-                <div class="col">
-                    <img id="test" style="padding: 0; margin: 0; position: absolute;" src="{{img}}" height="120px" />
-                </div>
-                <div class="col">
-                    <img id="test" style="padding: 0; margin: 0; position: absolute;" src="{{img}}" height="120px" />
-                </div>
-                <div class="col">
-                    <img id="test" style="padding: 0; margin: 0; position: absolute;" src="{{img}}" height="120px" />
-                </div>
-                <div class="col">
-                    <img id="test" style="padding: 0; margin: 0; position: absolute;" src="{{img}}" height="120px" />
-                </div>
+                {{#row2}}
+                    <div class="col" onclick="test()">
+                        <img id="test" style="padding: 0; margin: 0; position: absolute;" src="http://localhost:8080/image/{{type}}.png" height="120px" />
+                    </div>
+                {{/row2}}
             </div>
             <div class="row">
-                <div class="col">
-                    <img id="test" style="padding: 0; margin: 0; position: absolute;" src="{{img}}" height="120px" />
-                </div>
-                <div class="col">
-                    <img id="test" style="padding: 0; margin: 0; position: absolute;" src="{{img}}" height="120px" />
-                </div>
-                <div class="col">
-                    <img id="test" style="padding: 0; margin: 0; position: absolute;" src="{{img}}" height="120px" />
-                </div>
-                <div class="col">
-                    <img id="test" style="padding: 0; margin: 0; position: absolute;" src="{{img}}" height="120px" />
-                </div>
+                {{#row3}}
+                    <div class="col" onclick="test()">
+                        <img id="test" style="padding: 0; margin: 0; position: absolute;" src="http://localhost:8080/image/{{type}}.png" height="120px" />
+                    </div>
+                {{/row3}}
             </div>
             <div class="row">
-                <div class="col">
-                    <img id="test" style="padding: 0; margin: 0; position: absolute;" src="{{img}}" height="120px" />
-                </div>
-                <div class="col">
-                    <img id="test" style="padding: 0; margin: 0; position: absolute;" src="{{img}}" height="120px" />
-                </div>
-                <div class="col">
-                    <img id="test" style="padding: 0; margin: 0; position: absolute;" src="{{img}}" height="120px" />
-                </div>
-                <div class="col">
-                    <img id="test" style="padding: 0; margin: 0; position: absolute;" src="{{img}}" height="120px" />
-                </div>
+                {{#row4}}
+                    <div class="col" onclick="test()">
+                        <img id="test" style="padding: 0; margin: 0; position: absolute;" src="http://localhost:8080/image/{{type}}.png" height="120px" />
+                    </div>
+                {{/row4}}
             </div>
         </div>
+        {{#canSolve}}
+            <a href="/level/{{level}}/solved">
+                <button type="button" class="btn btn-success">Solucionar desafio</button>
+            </a>
+        {{/canSolve}}
+        {{^canSolve}}
+            {{#canNext}}
+                <a href="/level/{{nextLevel}}/">
+                    <button type="button" class="btn btn-primary">Próximo desafio</button>
+                </a>
+            {{/canNext}}
+        {{/canSolve}}
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
 <style>
 header {

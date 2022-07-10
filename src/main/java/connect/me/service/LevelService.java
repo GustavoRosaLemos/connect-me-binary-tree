@@ -1,49 +1,17 @@
 package connect.me.service;
 
-import connect.me.constant.Constant;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import connect.me.model.ComponentModel;
+import connect.me.model.TableModel;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 public class LevelService {
-    public ArrayList<ComponentModel> loadRow(String level, int column, boolean completed) {
-        ArrayList<ComponentModel> componentModels = new ArrayList<>();
-        switch (column) {
-            case 1: {
-                if (completed) {
-                    componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.none));
-                    componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.blocked));
-                    componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.none));
-                    componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.move));
-                } else {
-                    componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.none));
-                    componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.blocked));
-                    componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.move));
-                    componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.none));
-                }
-                break;
-            }
-            case 2: {
-                componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.none));
-                componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.none));
-                componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.none));
-                componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.none));
-                break;
-            }
-            case 3: {
-                componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.none));
-                componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.move));
-                componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.none));
-                componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.none));
-                break;
-            }
-            case 4: {
-                componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.none));
-                componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.none));
-                componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.none));
-                componentModels.add(new ComponentModel(0, 0, 0, 0, Constant.ComponentTypes.none));
-            }
-        }
-        return componentModels;
+    public List<ComponentModel> loadRow(String level, int column, boolean completed) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        TableModel tableModel = objectMapper.readValue(new File("src/main/java/connect/me/levels/level" + level + ".json"), TableModel.class);
+        return tableModel.getRows().get(column - 1);
     }
 }

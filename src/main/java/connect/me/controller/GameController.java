@@ -24,7 +24,7 @@ public class GameController {
     }
 
     @GetMapping(value = "/level/{level}")
-    public String getGameLevel(@PathVariable String level,  Model model) {
+    public String getGameLevel(@PathVariable String level,  Model model) throws IOException {
         int levelNumber;
         try {
             levelNumber = Integer.parseInt(level);
@@ -52,7 +52,7 @@ public class GameController {
     }
 
     @GetMapping(value = "/level/{level}/solved")
-    public String getGameLevelCompleted(@PathVariable String level,  Model model) {
+    public String getGameLevelCompleted(@PathVariable String level,  Model model) throws IOException {
         int levelNumber;
         try {
             levelNumber = Integer.parseInt(level);

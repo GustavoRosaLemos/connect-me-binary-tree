@@ -4,25 +4,25 @@
       { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
       { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
       { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
-      { "leftPins": 2, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "move" }
-    ],
-    [
-      { "leftPins": 0, "rightPins": 2, "topPins": 0, "bottomPins": 0, "type": "blocked" },
-      { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
-      { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
       { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" }
     ],
     [
+      { "leftPins": 0, "rightPins": 3, "topPins": 0, "bottomPins": 3, "type": "blocked" },
+      { "leftPins": 3, "rightPins": 2, "topPins": 0, "bottomPins": 0, "type": "blocked" },
       { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
-      { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
-      { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
-      { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" }
+      { "leftPins": 0, "rightPins": 0, "topPins": 3, "bottomPins": 1, "type": "move" }
     ],
     [
       { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
       { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
       { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
       { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" }
+    ],
+    [
+      { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
+      { "leftPins": 2, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "move" },
+      { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
+      { "leftPins": 0, "rightPins": 0, "topPins": 1, "bottomPins": 0, "type": "move" }
     ]
   ]
 }

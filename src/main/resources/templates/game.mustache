@@ -18,6 +18,12 @@
             <div class="row">
                 {{#row1}}
                     <div class="col" onclick="test()">
+                        <div class="d-flex justify-content-center align-items-center" style="position: absolute; height: 120px; width: 120px;">
+                            <img id="topPins" style="position: absolute; top: -4px; z-index: 1;" src="http://localhost:8080/image/{{topPins}}.png" />
+                            <img id="bottomPins" style="position: absolute; bottom: -4px; z-index: 2;" src="http://localhost:8080/image/{{bottomPins}}.png" />
+                            <img id="leftPins" style="position: absolute; z-index: 3; left: -33px; transform: rotate(270deg);" src="http://localhost:8080/image/{{leftPins}}.png" />
+                            <img id="rightPins" style="position: absolute; z-index: 3; right: -33px; transform: rotate(270deg);" src="http://localhost:8080/image/{{rightPins}}.png" />
+                        </div>
                         <img id="test" style="padding: 0; margin: 0; position: absolute;" src="http://localhost:8080/image/{{type}}.png" height="120px" />
                     </div>
                 {{/row1}}
@@ -25,6 +31,12 @@
             <div class="row">
                 {{#row2}}
                     <div class="col" onclick="test()">
+                        <div class="d-flex justify-content-center align-items-center" style="position: absolute; height: 120px; width: 120px;">
+                            <img id="topPins" style="position: absolute; top: -4px; z-index: 1;" src="http://localhost:8080/image/{{topPins}}.png" />
+                            <img id="bottomPins" style="position: absolute; bottom: -4px; z-index: 2;" src="http://localhost:8080/image/{{bottomPins}}.png" />
+                            <img id="leftPins" style="position: absolute; z-index: 3; left: -33px; transform: rotate(270deg);" src="http://localhost:8080/image/{{leftPins}}.png" />
+                            <img id="rightPins" style="position: absolute; z-index: 3; right: -33px; transform: rotate(270deg);" src="http://localhost:8080/image/{{rightPins}}.png" />
+                        </div>
                         <img id="test" style="padding: 0; margin: 0; position: absolute;" src="http://localhost:8080/image/{{type}}.png" height="120px" />
                     </div>
                 {{/row2}}
@@ -46,13 +58,13 @@
         </div>
         {{#canSolve}}
             <a href="/level/{{level}}/solved">
-                <button type="button" class="btn btn-success">Solucionar desafio</button>
+                <button type="button" class="btn btn-success">Solucionar desafio ✅</button>
             </a>
         {{/canSolve}}
         {{^canSolve}}
             {{#canNext}}
                 <a href="/level/{{nextLevel}}/">
-                    <button type="button" class="btn btn-primary">Próximo desafio</button>
+                    <button type="button" class="btn btn-primary">Próximo desafio  ▶</button>
                 </a>
             {{/canNext}}
         {{/canSolve}}

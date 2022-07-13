@@ -1,0 +1,28 @@
+{
+  "rows": [
+    [
+      { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
+      { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
+      { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
+      { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" }
+    ],
+    [
+      { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
+      { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
+      { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
+      { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 2, "type": "blocked" }
+    ],
+    [
+      { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
+      { "leftPins": 3, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "rotate" },
+      { "leftPins": 0, "rightPins": 0, "topPins": 3, "bottomPins": 3, "type": "rotate" },
+      { "leftPins": 0, "rightPins": 3, "topPins": 2, "bottomPins": 2, "type": "rotate" }
+    ],
+    [
+      { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
+      { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
+      { "leftPins": 0, "rightPins": 0, "topPins": 0, "bottomPins": 0, "type": "none" },
+      { "leftPins": 0, "rightPins": 0, "topPins": 2, "bottomPins": 0, "type": "blocked" }
+    ]
+  ]
+}

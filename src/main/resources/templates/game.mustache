@@ -9,8 +9,13 @@
 <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <header class="d-flex align-items-center fluid">
-        <div class="header-content d-flex justify-content-center">
-            <div class="header-title">Level: {{level}}</div>
+        <div class="header-content d-flex align-items-center" style="flex: 1;">
+            <div class="d-flex align-items-center"  style="flex: 1;">
+                <div class="header-title">Level: {{level}}</div>
+            </div>
+            <div class="d-flex align-items-center justify-content-end"  style="flex: 1;">
+                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal">Sobre</button>
+            </div>
         </div>
     </header>
     <div class="container mt-5 d-flex flex-column align-items-center">
@@ -69,17 +74,50 @@
             </div>
         </div>
         {{#canSolve}}
-            <a href="/level/{{level}}/solved">
-                <button type="button" class="btn btn-success">Solucionar desafio ✅</button>
-            </a>
+            <div>
+                <a href="/level/{{level}}/width">
+                    <button type="button" class="btn btn-success">Busca em largura</button>
+                </a>
+                <a href="/level/{{level}}/deep">
+                    <button type="button" class="btn btn-success">Busca em profundidade</button>
+                </a>
+            </div>
         {{/canSolve}}
         {{^canSolve}}
             {{#canNext}}
-                <a href="/level/{{nextLevel}}/">
-                    <button type="button" class="btn btn-primary">Próximo desafio  ▶</button>
+                <div>
+                    <a href="/level/{{level}}/">
+                        <button type="button" class="btn btn-primary">< Refazer desafio</button>
+                    </a>
+                    <a href="/level/{{nextLevel}}/">
+                        <button type="button" class="btn btn-primary">Próximo desafio ></button>
+                    </a>
+                </div>
+            {{/canNext}}
+            {{^canNext}}
+                <a href="/level/{{level}}/">
+                    <button type="button" class="btn btn-primary">< Refazer desafio</button>
                 </a>
             {{/canNext}}
         {{/canSolve}}
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Sobre</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><b> Nome:</b><br />Gustavo Rosa Lemos<br /><b>Email:</b><br />gustavo.lemos@edu.udesc.br</p>
+                    <p><b> Nome:</b><br />Paulo de Tarso<br /><b>Email:</b><br />paulo.dalescio@edu.udesc.br</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 <style>
@@ -116,14 +154,4 @@ body {
     background-color: #346693;
 }
 </style>
-<script>
-    let x = document.getElementById("test");
-    let y = 10;
-    function test() {
-        console.log("clicado!");
-        y++;
-        x.style.transform = "rotate("(180 % 360) +"deg)"
-    }
-}, 1)
-</script>
 </html>

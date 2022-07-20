@@ -10,4 +10,10 @@ public class Constant {
         blocked,
         none
     }
+
+    public enum TableTypes {
+        CHALLENGE,
+        DEEP,
+        WIDTH
+    }
 }

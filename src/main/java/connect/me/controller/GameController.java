@@ -42,17 +42,17 @@ public class GameController {
 
         model.addAttribute("level", level);
         model.addAttribute("img", "http://localhost:8080/image/blocked.png");
-        model.addAttribute("row1", new LevelService().loadRow(level, 1, false));
-        model.addAttribute("row2", new LevelService().loadRow(level, 2, false));
-        model.addAttribute("row3", new LevelService().loadRow(level, 3, false));
-        model.addAttribute("row4", new LevelService().loadRow(level, 4, false));
+        model.addAttribute("row1", new LevelService().loadRow(level, 1, Constant.TableTypes.CHALLENGE));
+        model.addAttribute("row2", new LevelService().loadRow(level, 2, Constant.TableTypes.CHALLENGE));
+        model.addAttribute("row3", new LevelService().loadRow(level, 3, Constant.TableTypes.CHALLENGE));
+        model.addAttribute("row4", new LevelService().loadRow(level, 4, Constant.TableTypes.CHALLENGE));
         model.addAttribute("canSolve", true);
         model.addAttribute("canNext", false);
         return "game";
     }
 
-    @GetMapping(value = "/level/{level}/solved")
-    public String getGameLevelCompleted(@PathVariable String level,  Model model) throws IOException {
+    @GetMapping(value = "/level/{level}/width")
+    public String getGameLevelWidth(@PathVariable String level,  Model model) throws IOException {
         int levelNumber;
         try {
             levelNumber = Integer.parseInt(level);
@@ -69,10 +69,37 @@ public class GameController {
             model.addAttribute("nextLevel", levelNumber + 1);
         }
         model.addAttribute("level", level);
-        model.addAttribute("row1", new LevelService().loadRow(level, 1, true));
-        model.addAttribute("row2", new LevelService().loadRow(level, 2, true));
-        model.addAttribute("row3", new LevelService().loadRow(level, 3, true));
-        model.addAttribute("row4", new LevelService().loadRow(level, 4, true));
+        model.addAttribute("row1", new LevelService().loadRow(level, 1, Constant.TableTypes.WIDTH));
+        model.addAttribute("row2", new LevelService().loadRow(level, 2, Constant.TableTypes.WIDTH));
+        model.addAttribute("row3", new LevelService().loadRow(level, 3, Constant.TableTypes.WIDTH));
+        model.addAttribute("row4", new LevelService().loadRow(level, 4, Constant.TableTypes.WIDTH));
+        model.addAttribute("nextLevel", Integer.parseInt(level) + 1);
+        model.addAttribute("img", "http://localhost:8080/image/blocked.png");
+        return "game";
+    }
+
+    @GetMapping(value = "/level/{level}/deep")
+    public String getGameLevelDeep(@PathVariable String level,  Model model) throws IOException {
+        int levelNumber;
+        try {
+            levelNumber = Integer.parseInt(level);
+        } catch (Exception e) {
+            return "redirect:/";
+        }
+
+        if (levelNumber > Constant.MAXLEVEL) {
+            return "redirect:/";
+        }
+
+        if (levelNumber < Constant.MAXLEVEL) {
+            model.addAttribute("canNext", true);
+            model.addAttribute("nextLevel", levelNumber + 1);
+        }
+        model.addAttribute("level", level);
+        model.addAttribute("row1", new LevelService().loadRow(level, 1, Constant.TableTypes.DEEP));
+        model.addAttribute("row2", new LevelService().loadRow(level, 2,  Constant.TableTypes.DEEP));
+        model.addAttribute("row3", new LevelService().loadRow(level, 3,  Constant.TableTypes.DEEP));
+        model.addAttribute("row4", new LevelService().loadRow(level, 4,  Constant.TableTypes.DEEP));
         model.addAttribute("nextLevel", Integer.parseInt(level) + 1);
         model.addAttribute("img", "http://localhost:8080/image/blocked.png");
         return "game";

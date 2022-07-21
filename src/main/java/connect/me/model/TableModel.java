@@ -10,7 +10,7 @@ import java.util.List;
 @Getter @Setter
 public class TableModel {
     @JsonProperty
-    private List<List<ComponentModel>> rows;
+    private ComponentModel[][] rows;
 
     public TableModel() {
         super();

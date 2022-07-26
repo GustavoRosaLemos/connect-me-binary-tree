@@ -11,9 +11,15 @@ import java.io.IOException;
 import java.util.*;
 
 public class LevelService {
-    public ComponentModel[] loadRow(String level, int column, Constant.TableTypes tableType) throws IOException {
+    public ComponentModel[][] loadRow(String level, Constant.TableTypes tableType) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         TableModel tableModel = objectMapper.readValue(new File("src/main/java/connect/me/levels/level" + level + ".json"), TableModel.class);
-        return tableModel.getRows()[column - 1];
+        if (tableType == Constant.TableTypes.DEEP) {
+            ComponentModel[][] table = new SearchController(tableModel.getRows(), "inicio").deepFind();
+            if (table != null) {
+                tableModel.setRows(table);
+            }
+        }
+        return tableModel.getRows();
     }
 }

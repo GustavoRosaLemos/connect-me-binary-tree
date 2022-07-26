@@ -1,6 +1,7 @@
 package connect.me.controller;
 
 import connect.me.constant.Constant;
+import connect.me.model.ComponentModel;
 import connect.me.service.LevelService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class GameController {
     }
 
     @GetMapping(value = "/level/{level}")
-    public String getGameLevel(@PathVariable String level,  Model model) throws IOException {
+    public String getGameLevel(@PathVariable String level,  Model model) throws Exception {
         int levelNumber;
         try {
             levelNumber = Integer.parseInt(level);
@@ -36,23 +37,21 @@ public class GameController {
             return "redirect:/";
         }
 
-        ArrayList<String> arrayList = new ArrayList<>();
-
-        model.addAttribute("test", arrayList);
+        ComponentModel[][] table = new LevelService().loadRow(level, Constant.TableTypes.CHALLENGE);
 
         model.addAttribute("level", level);
         model.addAttribute("img", "http://localhost:8080/image/blocked.png");
-        model.addAttribute("row1", new LevelService().loadRow(level, 1, Constant.TableTypes.CHALLENGE));
-        model.addAttribute("row2", new LevelService().loadRow(level, 2, Constant.TableTypes.CHALLENGE));
-        model.addAttribute("row3", new LevelService().loadRow(level, 3, Constant.TableTypes.CHALLENGE));
-        model.addAttribute("row4", new LevelService().loadRow(level, 4, Constant.TableTypes.CHALLENGE));
+        model.addAttribute("row1", table[0]);
+        model.addAttribute("row2", table[1]);
+        model.addAttribute("row3", table[2]);
+        model.addAttribute("row4", table[3]);
         model.addAttribute("canSolve", true);
         model.addAttribute("canNext", false);
         return "game";
     }
 
     @GetMapping(value = "/level/{level}/width")
-    public String getGameLevelWidth(@PathVariable String level,  Model model) throws IOException {
+    public String getGameLevelWidth(@PathVariable String level,  Model model) throws Exception {
         int levelNumber;
         try {
             levelNumber = Integer.parseInt(level);
@@ -68,18 +67,21 @@ public class GameController {
             model.addAttribute("canNext", true);
             model.addAttribute("nextLevel", levelNumber + 1);
         }
+
+        ComponentModel[][] table = new LevelService().loadRow(level, Constant.TableTypes.WIDTH);
+
         model.addAttribute("level", level);
-        model.addAttribute("row1", new LevelService().loadRow(level, 1, Constant.TableTypes.WIDTH));
-        model.addAttribute("row2", new LevelService().loadRow(level, 2, Constant.TableTypes.WIDTH));
-        model.addAttribute("row3", new LevelService().loadRow(level, 3, Constant.TableTypes.WIDTH));
-        model.addAttribute("row4", new LevelService().loadRow(level, 4, Constant.TableTypes.WIDTH));
+        model.addAttribute("row1", table[0]);
+        model.addAttribute("row2", table[1]);
+        model.addAttribute("row3", table[2]);
+        model.addAttribute("row4", table[3]);
         model.addAttribute("nextLevel", Integer.parseInt(level) + 1);
         model.addAttribute("img", "http://localhost:8080/image/blocked.png");
         return "game";
     }
 
     @GetMapping(value = "/level/{level}/deep")
-    public String getGameLevelDeep(@PathVariable String level,  Model model) throws IOException {
+    public String getGameLevelDeepResult(@PathVariable String level,  Model model) throws Exception {
         int levelNumber;
         try {
             levelNumber = Integer.parseInt(level);
@@ -95,11 +97,14 @@ public class GameController {
             model.addAttribute("canNext", true);
             model.addAttribute("nextLevel", levelNumber + 1);
         }
+
+        ComponentModel[][] table = new LevelService().loadRow(level, Constant.TableTypes.DEEP);
+
         model.addAttribute("level", level);
-        model.addAttribute("row1", new LevelService().loadRow(level, 1, Constant.TableTypes.DEEP));
-        model.addAttribute("row2", new LevelService().loadRow(level, 2,  Constant.TableTypes.DEEP));
-        model.addAttribute("row3", new LevelService().loadRow(level, 3,  Constant.TableTypes.DEEP));
-        model.addAttribute("row4", new LevelService().loadRow(level, 4,  Constant.TableTypes.DEEP));
+        model.addAttribute("row1", table[0]);
+        model.addAttribute("row2", table[1]);
+        model.addAttribute("row3", table[2]);
+        model.addAttribute("row4", table[3]);
         model.addAttribute("nextLevel", Integer.parseInt(level) + 1);
         model.addAttribute("img", "http://localhost:8080/image/blocked.png");
         return "game";

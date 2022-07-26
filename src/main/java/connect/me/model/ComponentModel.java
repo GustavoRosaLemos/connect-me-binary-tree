@@ -6,11 +6,13 @@ import connect.me.constant.Constant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.tomcat.util.bcel.Const;
+
+import java.util.UUID;
 
 @AllArgsConstructor
 @Getter @Setter
 public class ComponentModel {
+    private UUID id = UUID.randomUUID();
     @JsonProperty
     private Integer leftPins = 0;
     @JsonProperty
@@ -24,6 +26,14 @@ public class ComponentModel {
 
     public ComponentModel() {
         super();
+    }
+
+    public ComponentModel(Integer leftPins, Integer rightPins, Integer topPins, Integer bottomPins, Constant.ComponentTypes type) {
+        this.leftPins = leftPins;
+        this.rightPins = rightPins;
+        this.topPins = topPins;
+        this.bottomPins = bottomPins;
+        this.type = type;
     }
 
     public boolean rotateRight() {

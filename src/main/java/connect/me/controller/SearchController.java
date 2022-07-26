@@ -66,10 +66,10 @@ public class SearchController implements Estado {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof SearchController) {
-            SearchController e = (SearchController)o;
-            return e.toString().hashCode() == toString().hashCode();
-        }
+//        if (o instanceof SearchController) {
+//            SearchController e = (SearchController)o;
+//            return e.toString().hashCode() == toString().hashCode();
+//        }
         return false;
     }
 
@@ -100,60 +100,43 @@ public class SearchController implements Estado {
     @Override
     public List<Estado> sucessores() {
         String operation;
+//        operation = "Component: " + componentModel.getType() + " | Position: x" + row + " y" + col + " | Pins: pl" + componentModel.getLeftPins() + " pt" + componentModel.getTopPins() + " pr" + componentModel.getRightPins() + " pb" + componentModel.getBottomPins() + " | Operation: Roll";
+//        operation = "Component: " + componentModel.getType() + " | Position: x" + row + " y" + nextCol + " | Operation: Move";
         List<Estado> suc = new LinkedList<Estado>();
         for(int row = 0; row < 4; row++) {
             for (int col = 0; col < 4; col++) {
-                ComponentModel[][] table = this.deepCopy();
+                ComponentModel[][] table = this.deepCopy(this.componentModels);
                 ComponentModel componentModel = table[row][col];
                 if (componentModel.getType() != Constant.ComponentTypes.none && componentModel.getType() != Constant.ComponentTypes.blocked) {
                     // Rotate
                     if (componentModel.getType() == Constant.ComponentTypes.rotate) {
-                        componentModel.rotateRight();
-                        operation = "Component: " + componentModel.getType() + " | Position: x" + row + " y" + col + " | Pins: pl" + componentModel.getLeftPins() + " pt" + componentModel.getTopPins() + " pr" + componentModel.getRightPins() + " pb" + componentModel.getBottomPins() + " | Operation: Roll";
-                        suc.add(new SearchController(table, operation));
+                            ComponentModel[][] tempTable = this.deepCopy(table);
+                            ComponentModel copyComponent = tempTable[row][col];
+                        for (int r = 0; r < 4; r++) {
+                            Integer leftPins = copyComponent.getLeftPins();
+                            Integer topPins = copyComponent.getTopPins();
+                            Integer rightPins = copyComponent.getRightPins();
+                            Integer bottomPins = copyComponent.getBottomPins();
+
+                            ComponentModel rotateComponent = new ComponentModel(topPins, bottomPins, rightPins, leftPins, Constant.ComponentTypes.rotate);
+                            tempTable[row][col] = rotateComponent;
+                            operation = "Component: " + rotateComponent.getType() + " | Position: x" + row + " y" + col + " | Pins: pl" + leftPins + " pt" + topPins + " pr" + rightPins + " pb" + leftPins + " | Operation: Roll";
+                            suc.add(new SearchController(tempTable, operation));
+                        }
                     } else if(componentModel.getType() == Constant.ComponentTypes.move) {
-                        //Move down
-                        int nextRow;
-                        int backRow;
-                        if (row == 3) {
-                            nextRow = 0;
-                        } else {
-                            nextRow = row + 1;
+                        for (int x = 0; x < 4; x++) {
+                            for (int y = 0; y < 4; y++) {
+                                ComponentModel[][] tempTable = this.deepCopy(table);
+                                if (tempTable[x][y].getType() == Constant.ComponentTypes.none) {
+                                    tempTable[row][col] = new ComponentModel();
+                                    tempTable[x][y] = componentModel;
+                                    if (isComponentConnected(tempTable, x, y)) {
+                                        operation = "Component: " + componentModel.getId() + " | Position: x" + x + " y" + y + " | Operation: Move";
+                                        suc.add(new SearchController(tempTable, operation));
+                                    };
+                                }
+                            }
                         }
-
-                        if (row == 0) {
-                            backRow = 3;
-                        } else {
-                            backRow = row - 1;
-                        }
-                        table[row][col] = new ComponentModel();
-                        table[nextRow][col] = componentModel;
-                        operation = "Component: " + componentModel.getType() + " | Position: x" + nextRow + " y" + col + " | Operation: Move";
-                        suc.add(new SearchController(table, operation));
-                        table[nextRow][col] = new ComponentModel();
-                        table[backRow][col] = componentModel;
-
-                        //Move Right
-                        int nextCol;
-                        int backCol;
-                        if (col == 3) {
-                            nextCol = 0;
-                        } else {
-                            nextCol = col + 1;
-                        }
-
-                        if (col == 0) {
-                            backCol = 3;
-                        } else {
-                            backCol = col - 1;
-                        }
-
-                        table[row][col] = new ComponentModel();
-                        table[row][nextCol] = componentModel;
-                        operation = "Component: " + componentModel.getType() + " | Position: x" + row + " y" + nextCol + " | Operation: Move";
-                        suc.add(new SearchController(table, operation));
-                        table[row][nextCol] = new ComponentModel();
-                        table[row][backCol] = componentModel;
                     }
                 }
             }
@@ -161,15 +144,41 @@ public class SearchController implements Estado {
         return suc;
     }
 
-    private ComponentModel transformInNoneComponent() {
-        return new ComponentModel();
+    private boolean isComponentConnected(ComponentModel[][] table, int row, int col) {
+        ComponentModel componentModel = table[row][col];
+        if(col != 0) {
+            //verificar esquerda
+            if (componentModels[row][col].getLeftPins() == componentModels[row][col-1].getRightPins()) {
+                return true;
+            }
+        }
+        if(col != 3) {
+            //verificar direita
+            if (componentModels[row][col].getRightPins() == componentModels[row][col+1].getLeftPins()) {
+                return true;
+            }
+        }
+        if(row != 0) {
+            //verificar cima
+            if (componentModels[row][col].getTopPins() == componentModels[row-1][col].getBottomPins()) {
+                return true;
+            }
+        }
+
+        if(row != 3) {
+            //verificar baixo
+            if (componentModels[row][col].getBottomPins() == componentModels[row+1][col].getTopPins()) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    private ComponentModel[][] deepCopy() {
+    private ComponentModel[][] deepCopy(ComponentModel[][] table) {
         ComponentModel[][] clone = new ComponentModel[4][4];
         for(int row = 0; row < 4; row++) {
             for(int col = 0; col < 4; col++) {
-                clone[row][col] = this.componentModels[row][col];
+                clone[row][col] = table[row][col];
             }
         }
         return clone;

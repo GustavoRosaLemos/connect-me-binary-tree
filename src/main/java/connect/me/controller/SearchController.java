@@ -19,7 +19,7 @@ public class SearchController implements Estado {
     private final String operation;
 
     public boolean checkCompleted() {
-//        tableSoluction = componentModels;
+        tableSoluction = componentModels;
         for(int row = 0; row < 4; row++) {
             for(int col = 0; col < 4; col++) {
                 if(col != 0) {
@@ -49,7 +49,7 @@ public class SearchController implements Estado {
                 }
             }
         }
-        tableSoluction = componentModels;
+//        tableSoluction = componentModels;
         return true;
     }
 
@@ -59,9 +59,8 @@ public class SearchController implements Estado {
             System.out.println("Nao existe solucao");
         } else {
             System.out.println("Solucao encontrada");
-            return tableSoluction;
         }
-        return null;
+        return tableSoluction;
     }
 
     @Override
@@ -112,16 +111,24 @@ public class SearchController implements Estado {
                     if (componentModel.getType() == Constant.ComponentTypes.rotate) {
                             ComponentModel[][] tempTable = this.deepCopy(table);
                             ComponentModel copyComponent = tempTable[row][col];
-                        for (int r = 0; r < 4; r++) {
+                        for (int r = 0; r < 3; r++) {
                             Integer leftPins = copyComponent.getLeftPins();
                             Integer topPins = copyComponent.getTopPins();
                             Integer rightPins = copyComponent.getRightPins();
                             Integer bottomPins = copyComponent.getBottomPins();
 
-                            ComponentModel rotateComponent = new ComponentModel(topPins, bottomPins, rightPins, leftPins, Constant.ComponentTypes.rotate);
+                            ComponentModel rotateComponent = new ComponentModel();
+                            rotateComponent.setType(Constant.ComponentTypes.rotate);
+                            rotateComponent.setLeftPins(topPins);
+                            rotateComponent.setTopPins(rightPins);
+                            rotateComponent.setRightPins(bottomPins);
+                            rotateComponent.setBottomPins(leftPins);
+                            rotateComponent.setRotated(true);
                             tempTable[row][col] = rotateComponent;
-                            operation = "Component: " + rotateComponent.getType() + " | Position: x" + row + " y" + col + " | Pins: pl" + leftPins + " pt" + topPins + " pr" + rightPins + " pb" + leftPins + " | Operation: Roll";
-                            suc.add(new SearchController(tempTable, operation));
+                            if (isComponentConnected(tempTable, row, col)) {
+                                operation = "Component: " + rotateComponent.getType() + " | Position: x" + row + " y" + col + " | Pins: pl" + rotateComponent.getLeftPins() + " pt" + rotateComponent.getTopPins() + " pr" + rotateComponent.getRightPins() + " pb" + rotateComponent.getBottomPins() + " | Operation: Roll";
+                                suc.add(new SearchController(tempTable, operation));
+                            }
                         }
                     } else if(componentModel.getType() == Constant.ComponentTypes.move) {
                         for (int x = 0; x < 4; x++) {

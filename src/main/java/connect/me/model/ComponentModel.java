@@ -23,6 +23,7 @@ public class ComponentModel {
     private Integer bottomPins = 0;
     @JsonProperty
     private Constant.ComponentTypes type = Constant.ComponentTypes.none;
+    private boolean rotated = false;
 
     public ComponentModel() {
         super();

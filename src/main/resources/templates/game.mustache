@@ -86,12 +86,15 @@
         {{^canSolve}}
             {{#canNext}}
                 <div>
-                    <a href="/level/{{level}}/">
-                        <button type="button" class="btn btn-primary">< Refazer desafio</button>
-                    </a>
-                    <a href="/level/{{nextLevel}}/">
-                        <button type="button" class="btn btn-primary">Próximo desafio ></button>
-                    </a>
+                    <div>
+                        <a href="/level/{{level}}/">
+                            <button type="button" class="btn btn-primary">< Refazer desafio</button>
+                        </a>
+                        <a href="/level/{{nextLevel}}/">
+                            <button type="button" class="btn btn-primary">Próximo desafio ></button>
+                        </a>
+                    </div>
+                    <div class="find-text mt-3">Tempo de busca: {{time}}ms</div>
                 </div>
             {{/canNext}}
             {{^canNext}}
@@ -134,6 +137,11 @@ header {
     color: white;
     font-weight: bold;
     font-size: 20px;
+}
+.find-text {
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
 }
 .row {
     height: 120px;

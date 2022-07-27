@@ -2,6 +2,7 @@ package connect.me.controller;
 
 import connect.me.constant.Constant;
 import connect.me.model.ComponentModel;
+import connect.me.model.LevelReponseModel;
 import connect.me.service.LevelService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
 
 @Controller
 public class GameController {
@@ -37,7 +37,8 @@ public class GameController {
             return "redirect:/";
         }
 
-        ComponentModel[][] table = new LevelService().loadRow(level, Constant.TableTypes.CHALLENGE);
+        LevelReponseModel levelReponseModel = new LevelService().loadRow(level, Constant.TableTypes.CHALLENGE);
+        ComponentModel[][] table = levelReponseModel.getTable();
 
         model.addAttribute("level", level);
         model.addAttribute("img", "http://localhost:8080/image/blocked.png");
@@ -68,13 +69,15 @@ public class GameController {
             model.addAttribute("nextLevel", levelNumber + 1);
         }
 
-        ComponentModel[][] table = new LevelService().loadRow(level, Constant.TableTypes.WIDTH);
+        LevelReponseModel levelReponseModel = new LevelService().loadRow(level, Constant.TableTypes.WIDTH);
+        ComponentModel[][] table = levelReponseModel.getTable();
 
         model.addAttribute("level", level);
         model.addAttribute("row1", table[0]);
         model.addAttribute("row2", table[1]);
         model.addAttribute("row3", table[2]);
         model.addAttribute("row4", table[3]);
+        model.addAttribute("time", levelReponseModel.getWatch().getTotalTimeMillis());
         model.addAttribute("nextLevel", Integer.parseInt(level) + 1);
         model.addAttribute("img", "http://localhost:8080/image/blocked.png");
         return "game";
@@ -98,13 +101,15 @@ public class GameController {
             model.addAttribute("nextLevel", levelNumber + 1);
         }
 
-        ComponentModel[][] table = new LevelService().loadRow(level, Constant.TableTypes.DEEP);
+        LevelReponseModel levelReponseModel = new LevelService().loadRow(level, Constant.TableTypes.DEEP);
+        ComponentModel[][] table = levelReponseModel.getTable();
 
         model.addAttribute("level", level);
         model.addAttribute("row1", table[0]);
         model.addAttribute("row2", table[1]);
         model.addAttribute("row3", table[2]);
         model.addAttribute("row4", table[3]);
+        model.addAttribute("time", levelReponseModel.getWatch().getTotalTimeMillis());
         model.addAttribute("nextLevel", Integer.parseInt(level) + 1);
         model.addAttribute("img", "http://localhost:8080/image/blocked.png");
         return "game";

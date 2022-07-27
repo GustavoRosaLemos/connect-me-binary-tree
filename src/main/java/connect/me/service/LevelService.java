@@ -19,6 +19,11 @@ public class LevelService {
             if (table != null) {
                 tableModel.setRows(table);
             }
+        } else if(tableType == Constant.TableTypes.WIDTH) {
+            ComponentModel[][] table = new SearchController(tableModel.getRows(), "inicio").widthFind();
+            if (table != null) {
+                tableModel.setRows(table);
+            }
         }
         return tableModel.getRows();
     }

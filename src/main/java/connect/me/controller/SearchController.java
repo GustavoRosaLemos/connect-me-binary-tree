@@ -3,6 +3,7 @@ package connect.me.controller;
 import connect.me.constant.Constant;
 import connect.me.model.ComponentModel;
 import connect.me.model.TableModel;
+import connect.me.service.BuscaLargura;
 import connect.me.service.BuscaProfundidade;
 import connect.me.service.Estado;
 import connect.me.service.Nodo;
@@ -63,12 +64,22 @@ public class SearchController implements Estado {
         return tableSoluction;
     }
 
+    public ComponentModel[][] widthFind() throws Exception {
+        Nodo nodo = new BuscaLargura<SearchController>().busca(this);
+        if (nodo == null) {
+            System.out.println("Nao existe solucao");
+        } else {
+            System.out.println("Solucao encontrada");
+        }
+        return tableSoluction;
+    }
+
     @Override
     public boolean equals(Object o) {
-//        if (o instanceof SearchController) {
-//            SearchController e = (SearchController)o;
-//            return e.toString().hashCode() == toString().hashCode();
-//        }
+        if (o instanceof SearchController) {
+            SearchController e = (SearchController)o;
+            return e.toString().hashCode() == toString().hashCode();
+        }
         return false;
     }
 
@@ -99,8 +110,6 @@ public class SearchController implements Estado {
     @Override
     public List<Estado> sucessores() {
         String operation;
-//        operation = "Component: " + componentModel.getType() + " | Position: x" + row + " y" + col + " | Pins: pl" + componentModel.getLeftPins() + " pt" + componentModel.getTopPins() + " pr" + componentModel.getRightPins() + " pb" + componentModel.getBottomPins() + " | Operation: Roll";
-//        operation = "Component: " + componentModel.getType() + " | Position: x" + row + " y" + nextCol + " | Operation: Move";
         List<Estado> suc = new LinkedList<Estado>();
         for(int row = 0; row < 4; row++) {
             for (int col = 0; col < 4; col++) {
@@ -125,10 +134,8 @@ public class SearchController implements Estado {
                             rotateComponent.setBottomPins(leftPins);
                             rotateComponent.setRotated(true);
                             tempTable[row][col] = rotateComponent;
-                            if (isComponentConnected(tempTable, row, col)) {
-                                operation = "Component: " + rotateComponent.getType() + " | Position: x" + row + " y" + col + " | Pins: pl" + rotateComponent.getLeftPins() + " pt" + rotateComponent.getTopPins() + " pr" + rotateComponent.getRightPins() + " pb" + rotateComponent.getBottomPins() + " | Operation: Roll";
-                                suc.add(new SearchController(tempTable, operation));
-                            }
+                            operation = "Component: " + rotateComponent.getId() + " | Position: x" + row + " y" + col + " | Pins: pl" + rotateComponent.getLeftPins() + " pt" + rotateComponent.getTopPins() + " pr" + rotateComponent.getRightPins() + " pb" + rotateComponent.getBottomPins() + " | Operation: Roll";
+                            suc.add(new SearchController(tempTable, operation));
                         }
                     } else if(componentModel.getType() == Constant.ComponentTypes.move) {
                         for (int x = 0; x < 4; x++) {
@@ -137,10 +144,10 @@ public class SearchController implements Estado {
                                 if (tempTable[x][y].getType() == Constant.ComponentTypes.none) {
                                     tempTable[row][col] = new ComponentModel();
                                     tempTable[x][y] = componentModel;
-                                    if (isComponentConnected(tempTable, x, y)) {
+                                    if (isComponentNextOther(tempTable, x, y)) {
                                         operation = "Component: " + componentModel.getId() + " | Position: x" + x + " y" + y + " | Operation: Move";
                                         suc.add(new SearchController(tempTable, operation));
-                                    };
+                                    }
                                 }
                             }
                         }
@@ -179,6 +186,46 @@ public class SearchController implements Estado {
             }
         }
         return false;
+    }
+
+    private boolean isComponentNextOther(ComponentModel[][] table, int row, int col) {
+        ComponentModel componentModel = table[row][col];
+        if(col != 0) {
+            //verificar esquerda
+            if (componentModels[row][col-1].getType() != Constant.ComponentTypes.none) {
+                return true;
+            }
+        }
+        if(col != 3) {
+            //verificar direita
+            if (componentModels[row][col+1].getType() != Constant.ComponentTypes.none) {
+                return true;
+            }
+        }
+        if(row != 0) {
+            //verificar cima
+            if (componentModels[row-1][col].getType() != Constant.ComponentTypes.none) {
+                return true;
+            }
+        }
+
+        if(row != 3) {
+            //verificar baixo
+            if (componentModels[row+1][col].getType() != Constant.ComponentTypes.none) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String getStringReference(ComponentModel[][] table) {
+        StringBuilder tableStringReference = new StringBuilder();
+        for (int row = 0; row < 4; row++) {
+            for (int col = 0; col < 4; col++) {
+                tableStringReference.append(table[row][col].getType());
+            }
+        }
+        return tableStringReference.toString();
     }
 
     private ComponentModel[][] deepCopy(ComponentModel[][] table) {
